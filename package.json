@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "start": "serve -s dist",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
@@ -28,7 +29,8 @@
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.6.0",
     "react-select": "^5.10.1",
-    "recharts": "^2.15.3"
+    "recharts": "^2.15.3",
+    "serve": "^14.2.4"
   },
   "devDependencies": {
     "@types/react": "^18.2.64",
