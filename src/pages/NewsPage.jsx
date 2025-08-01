@@ -11,8 +11,6 @@ import {
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
-const BASE_IMAGE_URL = import.meta.env.VITE_API_URL.replace('/api', '');
-
 const NewsPage = () => {
   const [newsList, setNewsList] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -45,18 +43,6 @@ const NewsPage = () => {
     return new Date(dateString).toLocaleDateString('id-ID', options);
   };
 
-  // Fungsi Helper untuk mendapatkan URL gambar lengkap
-  const getFullImageUrl = (relativePath) => {
-    let baseUrl = BASE_IMAGE_URL;
-    if (!baseUrl.endsWith('/')) {
-      baseUrl += '/';
-    }
-    if (relativePath.startsWith('/')) {
-      relativePath = relativePath.substring(1);
-    }
-    return `${baseUrl}${relativePath}`;
-  };
-
   return (
     <Container className='mt-4'>
       <h2 className='text-center mb-4 fw-bold text-primary-custom'>
@@ -86,7 +72,7 @@ const NewsPage = () => {
                   <div className='news-card-img-wrapper'>
                     <Card.Img
                       variant='top'
-                      src={getFullImageUrl(newsItem.imageUrl)} 
+                      src={newsItem.imageUrl} 
                       alt={newsItem.title}
                       className='news-card-img'
                     />

@@ -15,9 +15,6 @@ import { useToast } from '../context/ToastContext';
 import SearchBar from '../components/SearchBar';
 import { Link } from 'react-router-dom';
 
-const BASE_IMAGE_URL = import.meta.env.VITE_API_URL.replace('/api', '');
-
-
 const NewsManagementPage = () => {
   const { authState } = useAuth();
   const { triggerToast } = useToast();
@@ -119,16 +116,14 @@ const NewsManagementPage = () => {
       };
 
       if (isEditing) {
-        // eslint-disable-next-line no-unused-vars
-        const response = await axios.put(
+        await axios.put(
           `${import.meta.env.VITE_API_URL}/news/${currentNews.id}`,
           formData,
           config
         );
         triggerToast('Berita berhasil diperbarui!', 'success');
       } else {
-        // eslint-disable-next-line no-unused-vars
-        const response = await axios.post(
+        await axios.post(
           `${import.meta.env.VITE_API_URL}/news`,
           formData,
           config
@@ -226,13 +221,6 @@ const NewsManagementPage = () => {
     setNewsToDeleteId(null);
   };
 
-  const getFullImageUrl = (relativePath) => {
-    if (relativePath && !relativePath.startsWith('/')) {
-      return `${BASE_IMAGE_URL}/${relativePath}`;
-    }
-    return `${BASE_IMAGE_URL}${relativePath}`; 
-  };
-
   const formatDate = (dateString) => {
     const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
     return new Date(dateString).toLocaleDateString('id-ID', options);
@@ -294,7 +282,7 @@ const NewsManagementPage = () => {
                   <td>
                     {news.imageUrl ? (
                       <Image
-                        src={getFullImageUrl(news.imageUrl)}
+                        src={news.imageUrl}
                         alt='News Image'
                         style={{ width: '80px', height: 'auto', objectFit: 'cover' }}
                         thumbnail
@@ -373,17 +361,17 @@ const NewsManagementPage = () => {
                 accept='image/*'
                 onChange={handleFileChange}
               />
-              {imagePreview && ( // Pratinjau gambar baru yang akan diupload
+              {imagePreview && (
                 <div className='mt-2'>
                   <p>Preview Gambar Baru:</p>
                   <Image src={imagePreview} alt='Preview' fluid thumbnail style={{ maxWidth: '200px' }} />
                 </div>
               )}
-              {isEditing && currentNews.imageUrl && !imageFile && ( // Gambar saat ini (saat edit, jika belum ada gambar baru dipilih)
+              {isEditing && currentNews.imageUrl && !imageFile && (
                 <div className='mt-2'>
                   <p>Gambar Saat Ini:</p>
                   <Image
-                    src={getFullImageUrl(currentNews.imageUrl)} // <-- Pastikan URL gambar benar
+                    src={currentNews.imageUrl}
                     alt='Current News Image'
                     fluid
                     thumbnail

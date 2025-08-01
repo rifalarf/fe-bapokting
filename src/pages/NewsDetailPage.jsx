@@ -47,21 +47,6 @@ const NewsDetailPage = () => {
     return new Date(dateString).toLocaleDateString('id-ID', options);
   };
 
-  const getFullImageUrl = (relativePath) => {
-    const baseUrlForStaticFiles = import.meta.env.VITE_API_URL.replace(
-      '/api',
-      ''
-    );
-    let baseUrl = baseUrlForStaticFiles;
-    if (!baseUrl.endsWith('/')) {
-      baseUrl += '/';
-    }
-    if (relativePath.startsWith('/')) {
-      relativePath = relativePath.substring(1);
-    }
-    return `${baseUrl}${relativePath}`;
-  };
-
   const backUrl =
     authState.isAuthenticated && authState.role === 'admin'
       ? '/admin/news-management'
@@ -85,7 +70,7 @@ const NewsDetailPage = () => {
             <div className='news-detail-img-wrapper'>
               <Card.Img
                 variant='top'
-                src={getFullImageUrl(newsItem.imageUrl)}
+                src={newsItem.imageUrl}
                 alt={newsItem.title}
                 className='news-detail-img'
               />
